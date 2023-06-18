@@ -48,12 +48,19 @@ namespace DiceRoller
                 case "6":
                     numSides = 20;
                     break;
+
+                default:
+                    Clear();
+                    WriteLine("Input failed, try again...");
+                    ReadKey();
+                    Main();
+                    break;
             }
 
             Clear();
             if (numSides == 20)
             {
-                WriteLine("Would you to have a DC? If so, please enter the number (1,20. If not, then enter 0.");
+                WriteLine("Would you to have a DC? If so, please enter the number (1,20) If not, then enter 0.");
                 string dcInput = Console.ReadLine();
 
                 switch (dcInput)
@@ -121,17 +128,35 @@ namespace DiceRoller
                     case "20":
                         dc = 20;
                         break;
+
+                    default:
+                        Clear();
+                        WriteLine("Input failed, try again...");
+                        ReadKey();
+                        Main();
+                        break;
                 }
 
             }
-                Clear();
-                WriteLine("Would you like to add a number to your roll, if so, please enter it here. If not, enter 0.");
-                string addStr = ReadLine();
-
-                int add = Convert.ToInt32(addStr);
 
             Clear();
-            WriteLine("Would you like to have advantage [1], disadvantage [2], or nothing [3]?");
+            WriteLine("Would you like to add a number to your roll, if so, please enter it here. If not, enter 0.");
+            string addStr = ReadLine();
+
+            try
+            {
+                int add = Convert.ToInt32(addStr);
+            }
+            catch
+            {
+                Clear();
+                WriteLine("Input failed, try again...");
+                ReadKey();
+                Main();
+            }
+
+            Clear();
+            WriteLine("Would you like to have advantage [1], disadvantage [2], or nothing [Any Key]?");
             string advantageStr = ReadLine();
 
             switch (advantageStr)
@@ -148,9 +173,6 @@ namespace DiceRoller
                     disadvantage = false;
                     break;
             }
-            //Fake Loading Screen
-            Load();
-            Clear();
 
             if (advantage == false && disadvantage == false)
             {
@@ -193,6 +215,7 @@ namespace DiceRoller
                 }
             }
 
+            Clear();
 
             if (dc == 0)
             {
@@ -243,22 +266,6 @@ namespace DiceRoller
             else
             {
                 Main();
-            }
-        }
-
-        static void Load()
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                Clear();
-                Write("Rolling");
-                Thread.Sleep(500);
-                Write(".");
-                Thread.Sleep(500);
-                Write(".");
-                Thread.Sleep(500);
-                Write(".");
-                Thread.Sleep(500);
             }
         }
     }
